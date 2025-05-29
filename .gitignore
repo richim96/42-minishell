@@ -1,7 +1,10 @@
+auto
+
 # Prerequisites
 *.d
 
 # Object files
+obj/
 *.o
 *.ko
 *.obj
@@ -50,3 +53,21 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Executable
+minishell
+
+# Libft compiled library
+libft/libft.a
+libft/*.o
+
+# OS generated files
+.DS_Store
+*.swp
+*~
+
+# Build directories (if any other than obj)
+build/
+
+# VSCode specific
+.vscode/
