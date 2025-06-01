@@ -3,42 +3,43 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rmei <rmei@student.42.fr>                  +#+  +:+       +#+         #
+#    By: rmei <rmei@student.42berlin.de>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/23 12:10:35 by rmei              #+#    #+#              #
-#    Updated: 2024/08/21 18:39:44 by rmei             ###   ########.fr        #
+#    Updated: 2025/06/01 11:50:24 by rmei             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#### -- VARIABLES -- ####
-SRC = atoi bzero calloc error get_next_line haschar isalnum isalpha isascii isdigit \
-	isprint itoa lstnew lstadd_back lstadd_front lstclear lstdelone lstiter lstlast \
-	lstmap lstsize memchr memcmp memcpy memmove memset numlen printf putchar_fd \
-	putendl_fd putnbr_fd putnbr_base_fd putstr_fd realloc split substr strchr strdup \
-	striteri strjoin strlcat strlcpy strlen strmapi strncmp strnstr strrchr strtrim \
-	tolower toupper
-SRC := $(addsuffix .c, $(addprefix src/ft_, ${SRC}))
-
-OBJS = ${SRC:%.c=%.o}
-
 NAME = libft.a
 
-CPPFLAGS = -I.
-CFLAGS = -Wall -Wextra -Werror
+# Directories
+SRC_DIR = src
+OBJ_DIR = obj
 
-#### -- RULES -- ####
-all: ${NAME}
+# Compiler and Flags
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -Iinclude
 
-${NAME}: ${OBJS}
+# Source and Object Files
+SRCS = $(shell find $(SRC_DIR) -name '*.c')
+OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+
+# Rules
+all: $(NAME)
+
+$(NAME): $(OBJS)
 	@ar -rcs $@ $^
 
-%.o: %.c
-	@cc ${CPPFLAGS} ${CFLAGS} -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@rm -f ${OBJS}
+	echo "Cleaning libft.a object files..."
+	@rm -f $(OBJS)
 
 fclean: clean
-	@rm -f ${NAME}
+	echo "Cleaning $(NAME)..."
+	@rm -f $(NAME)
 
 re: fclean all
