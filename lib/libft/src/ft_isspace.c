@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmei <rmei@student.42berlin.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 14:55:28 by rmei              #+#    #+#             */
-/*   Updated: 2024/04/23 16:38:30 by rmei             ###   ########.fr       */
+/*   Created: 2025/06/01 20:46:22 by rmei              #+#    #+#             */
+/*   Updated: 2025/06/01 20:48:12 by rmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Converts a character to uppercase, if possible */
-int	ft_toupper(int c)
+/** Checks if a character is a whitespace. */
+int	ft_isspace(int c)
 {
-	if (c >= 'a' && c <= 'z')
-		c -= 32;
-	return (c);
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' ||
+        c == '\r')
+		return (1);
+	return (0);
 }

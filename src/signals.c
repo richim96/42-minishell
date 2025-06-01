@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rmei <rmei@student.42berlin.de>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/01 11:52:47 by rmei              #+#    #+#             */
+/*   Updated: 2025/06/01 12:20:04 by rmei             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-// Definition of the global signal variable
 volatile sig_atomic_t g_signal_received = 0;
 
 /*
@@ -15,7 +26,6 @@ static void	ft_handle_sigint(int signo)
 	g_signal_received = signo; // Store signo (SIGINT)
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	rl_on_new_line(); // Notify readline that we've moved to a new line
-//	rl_replace_line("", 0); // Clear the current input buffer (commented out as it might be too aggressive for some readline versions)
 	rl_redisplay(); // Redisplay the prompt and cleared buffer
 }
 
@@ -39,7 +49,7 @@ static void	ft_handle_sigquit(int signo)
  * SIG_IGN makes the process ignore the signal.
  * SIG_DFL restores the default signal handler.
  */
-void	ft_setup_signal_handlers(void)
+void	ft_init_signal_handlers(void)
 {
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
