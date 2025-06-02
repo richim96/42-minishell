@@ -6,7 +6,7 @@
 #    By: rmei <rmei@student.42berlin.de>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/23 12:10:35 by rmei              #+#    #+#              #
-#    Updated: 2025/06/01 20:57:45 by rmei             ###   ########.fr        #
+#    Updated: 2025/06/02 17:06:07 by rmei             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,13 @@ NAME = libft.a
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRCS = $(shell find $(SRC_DIR) -name '*.c')
+SRCS = atoi bzero calloc error get_next_line haschar isalnum isalpha isascii isdigit \
+	isprint isspace itoa lstnew lstadd_back lstadd_front lstclear lstdelone lstiter \
+	lstlast lstmap lstsize memchr memcmp memcpy memmove memset numlen printf putchar_fd \
+	putendl_fd putnbr_fd putnbr_base_fd putstr_fd realloc split substr strchr strdup \
+	striteri strjoin strlcat strlcpy strlen strmapi strncmp strnstr strrchr strtrim \
+	tolower toupper
+SRCS := $(addsuffix .c, $(addprefix $(SRC_DIR)/ft_, ${SRCS}))
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 # Logger
@@ -29,29 +35,28 @@ define log_info
 endef
 
 # ---- RULES ---- #
-.PHONY: all compile-start clean arclean fclean re
+.PHONY: all end clean fclean re
 
-all: $(NAME)
+all: $(NAME) end
 
 $(NAME): $(OBJS)
 	@ar -rcs $@ $^
-	@$(call log_info, "Archive for $(NAME) created")
+	@$(call log_info, "Archive ´$(NAME)´ created")
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | compile-start
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
+	@$(call log_info, "Compiled $< to $@")
 	@cc -Wall -Wextra -Werror -Iinclude -c $< -o $@
 
-compile-start:
-	@$(call log_info, "Compiling $(NAME)...")
+end:
+	@$(call log_info, "Everything is done!")
 
 clean:
-	@$(call log_info, "Cleaning $(NAME) object files...")
+	@$(call log_info, "Deleting object files if any...")
 	@rm -rf $(OBJ_DIR)
 
-arclean:
-	@$(call log_info, "Cleaning $(NAME) archive...")
+fclean: clean
+	@$(call log_info, "Deleting archive ´$(NAME)´ if present...")
 	@rm -f $(NAME)
-
-fclean: clean arclean
 
 re: fclean all

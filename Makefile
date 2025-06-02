@@ -6,7 +6,7 @@
 #    By: rmei <rmei@student.42berlin.de>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 11:50:45 by rmei              #+#    #+#              #
-#    Updated: 2025/06/01 20:55:22 by rmei             ###   ########.fr        #
+#    Updated: 2025/06/02 17:05:17 by rmei             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRC_DIR = src
 OBJ_DIR = obj
 LIBFT_DIR = lib/libft
 
-SRCS = $(shell find $(SRC_DIR) -name '*.c')
+SRCS = lexer main signals
+SRCS := $(addsuffix .c, $(addprefix $(SRC_DIR)/, ${SRCS}))
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 # Logger
@@ -34,33 +35,38 @@ define log_info
 endef
 
 # ---- RULES ---- #
-.PHONY: all libft compile-start clean fclean re bonus 
+.PHONY: all libft end clean fclean re bonus 
 
-all: $(NAME)
+all: libft $(NAME) end
 
-$(NAME): $(OBJS) libft compile-start
+$(NAME): $(OBJS) 
 	@$(call log_info, "Linking $(NAME)...")
 	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
 	@$(call log_info, "Created $(NAME) executable")
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
+	@$(call log_info, "Compiling $< to $@...")
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 libft:
-	@$(call log_info, "Making libft in $(LIBFT_DIR)/...")
+	@$(call log_info, "Calling libft Makefile...")
 	@$(MAKE) -sC $(LIBFT_DIR)
 
-compile-start:
-	@$(call log_info, "Compiling $(NAME)...")
+end:
+	@$(call log_info, "Everything is done!")
 
 clean:
+	@$(call log_info, "Calling libft Makefile...")
 	@$(MAKE) -sC $(LIBFT_DIR) clean
 	@$(call log_info, "Cleaning $(NAME) object files...")
 	@rm -rf $(OBJ_DIR)
 
-fclean: clean
-	@$(MAKE) -sC $(LIBFT_DIR) arclean
+fclean:
+	@$(call log_info, "Calling libft Makefile...")
+	@$(MAKE) -sC $(LIBFT_DIR) fclean
+	@$(call log_info, "Cleaning $(NAME) object files...")
+	@rm -rf $(OBJ_DIR)
 	@$(call log_info, "Cleaning $(NAME)...")
 	@rm -f $(NAME)
 
