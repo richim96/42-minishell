@@ -6,7 +6,7 @@
 /*   By: rmei <rmei@student.42berlin.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:45:52 by rmei              #+#    #+#             */
-/*   Updated: 2025/06/01 20:49:19 by rmei             ###   ########.fr       */
+/*   Updated: 2025/06/09 19:14:18 by rmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@
 # define FALSE 0
 
 /* Structures */
+/**
+ * @brief A linked list node.
+ * @param content	(void *) The content of the node.
+ * @param next		(struct s_list *) The next node in the list.
+*/
 typedef struct s_list
 {
 	void			*content;

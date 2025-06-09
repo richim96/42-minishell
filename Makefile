@@ -6,7 +6,7 @@
 #    By: rmei <rmei@student.42berlin.de>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 11:50:45 by rmei              #+#    #+#              #
-#    Updated: 2025/06/02 17:05:17 by rmei             ###   ########.fr        #
+#    Updated: 2025/06/09 19:58:38 by rmei             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,18 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude -I$(LIBFT_DIR)/include
 LDFLAGS = -L$(LIBFT_DIR) -lft -lreadline
 
+# Directory tree
 SRC_DIR = src
 OBJ_DIR = obj
 LIBFT_DIR = lib/libft
 
-SRCS = lexer main signals
-SRCS := $(addsuffix .c, $(addprefix $(SRC_DIR)/, ${SRCS}))
+PARSING_SRCS = lexer.c operators.c quotes.c tokens.c
+PARSING_SRCS := $(addprefix parsing/, ${PARSING_SRCS})
+COMMAND_SRCS = ft_cd.c ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c
+COMMAND_SRCS := $(addprefix commands/, ${COMMAND_SRCS})
+
+SRCS = main.c signals.c $(PARSING_SRCS) $(COMMAND_SRCS)
+SRCS := $(addprefix $(SRC_DIR)/, ${SRCS})
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 # Logger
@@ -59,15 +65,15 @@ end:
 clean:
 	@$(call log_info, "Calling libft Makefile...")
 	@$(MAKE) -sC $(LIBFT_DIR) clean
-	@$(call log_info, "Cleaning $(NAME) object files...")
+	@$(call log_info, "Deleting $(NAME) object files if any...")
 	@rm -rf $(OBJ_DIR)
 
 fclean:
 	@$(call log_info, "Calling libft Makefile...")
 	@$(MAKE) -sC $(LIBFT_DIR) fclean
-	@$(call log_info, "Cleaning $(NAME) object files...")
+	@$(call log_info, "Deleting object files if any...")
 	@rm -rf $(OBJ_DIR)
-	@$(call log_info, "Cleaning $(NAME)...")
+	@$(call log_info, "Deleting ´$(NAME)´ executable if present...")
 	@rm -f $(NAME)
 
 re: fclean all

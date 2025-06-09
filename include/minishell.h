@@ -6,7 +6,7 @@
 /*   By: rmei <rmei@student.42berlin.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 11:52:56 by rmei              #+#    #+#             */
-/*   Updated: 2025/06/01 20:49:40 by rmei             ###   ########.fr       */
+/*   Updated: 2025/06/09 19:24:38 by rmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,18 @@
 
 // Project-specific includes
 # include "../lib/libft/include/libft.h"
-# include "lexer.h"
+# include "parser.h"
 
 extern volatile sig_atomic_t    g_signal_received;
 
 // Function Prototypes
 
 // Signals
+
 void                            ft_init_signal_handlers(void);
 
 // Tokenizer
-t_list                          *ft_tokenize(const char *input_line);
+
 // void ft_free_tokens(t_list **tokens_head); // We'll add this later
 
 #endif 

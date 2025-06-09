@@ -6,7 +6,7 @@
 #    By: rmei <rmei@student.42berlin.de>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/23 12:10:35 by rmei              #+#    #+#              #
-#    Updated: 2025/06/02 17:06:07 by rmei             ###   ########.fr        #
+#    Updated: 2025/06/09 19:57:31 by rmei             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ clean:
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@$(call log_info, "Deleting archive ´$(NAME)´ if present...")
+	@$(call log_info, "Deleting ´$(NAME)´ archive if present...")
 	@rm -f $(NAME)
 
 re: fclean all
